@@ -34,6 +34,11 @@ until irc_server.eof? do
 		irc_server.puts "PRIVMSG #{channel} :#{response}"
 	end
 
+	if msg.include? "what day is it?"
+		response = "Today is the #{CurDay} (A #{CurWkDay})"
+		irc_server.puts "PRIVMSG #{channel} :#{response}"
+	end
+
 	if msg.include? "what day of the week is it?"
 		response = "It's #{CurWkDay}!"
 		irc_server.puts "PRIVMSG #{channel} :#{response}"
