@@ -1,15 +1,17 @@
 require "socket"
-require "#!/usr/bin/ruby -w"
 
-server = "Tampa.FL.US.Undernet.org"
+server = "chat.freenode.net"
 port = "6667"
 nick = "TimeBot"
 channel = "#Bitmaker"
 
-CurTime = Time.new
-CurDate = Time.wday + " " + Time.day + " " + Time.month + " " + Time.year
-CurMonth = Time.month
-CurYear
+#List of potential outputs
+time = Time.new
+CurTime = time.now(%I, %p)
+CurWkDay = time.wday(%a)
+CurDay = time.day
+CurMonth = time.month(%B)
+CurYear = time.year
 
 irc_server = TCPSocket.open(server, port)
 
@@ -23,5 +25,19 @@ until s.eof? do
   puts msg
 end
 
-if msg.include? time_question_time
-	response = "The time is currently #{CurTime}"
+#Responses
+
+if msg.include? "PRIVMSG #{channel} :What time is it?" #|| "PRIVMSG #{channel} :What's the time?"
+	response = "The time is currently #{CurTime}."
+	irc_server.puts "PRIVMSG #{channel} :#{response}"
+end
+
+if msg.include? "PRIVMSG #{channel} :What day of the week is it?"
+	response = "It's #{CurWkDay}!"
+	irc_server.puts "PRIVMSG #{channel} :#{response}"
+end
+
+if msg.include? "PRIVMSG #{channel} :What day of the week is it?"
+	response = "It's #{CurWkDay}!"
+	irc_server.puts "PRIVMSG #{channel} :#{response}"
+end
