@@ -7,22 +7,13 @@ port = "6667"
 nick = "TimeBot647"
 channel = "#Bitmaker"
 # Required prefix in order for bot to know to pay attention to msg
-greeting_prefix = "PRIVMSG #bitmaker :"
+greeting_prefix = "privmsg #bitmaker :"
 # Words the bot will be looking for
 keywords = ['time', 'day', 'week', 'month', 'year', 'zone']
-
-# TimeBot accesses server defined above and tells it information
-# about itself
-irc_server = TCPSocket.open(server, port)
-irc_server.puts "USER timebot 0 * TimeBot"
-irc_server.puts "NICK #{nick}"
-irc_server.puts "JOIN #{channel}"
-irc_server.puts "PRIVMSG #{channel} :If you'd like to know the time, date, year, etc. Just ask me!"
 
 # Method to be accessed from the loop in order to retrieve up-to-date
 # time information and the appropriate response
 def current_time
-
 	# List of potential time outputs
 	time = Time.new
 	@CurTime = time.inspect
@@ -44,6 +35,14 @@ def current_time
 		['zone'] => "#{@CurZone}"
 	}
 end
+
+# TimeBot accesses server defined above and tells it information
+# about itself
+irc_server = TCPSocket.open(server, port)
+irc_server.puts "USER timebot 0 * TimeBot"
+irc_server.puts "NICK #{nick}"
+irc_server.puts "JOIN #{channel}"
+irc_server.puts "PRIVMSG #{channel} :If you'd like to know the time, date, year, etc. Just ask me!"
 
 until irc_server.eof? do
   msg = irc_server.gets.downcase
