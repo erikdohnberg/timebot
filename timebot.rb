@@ -69,5 +69,4 @@ until irc_server.eof? do
 		# TimeBot response to user's questions about the time
 		irc_server.puts "PRIVMSG #{channel} :#{@responses[matched_keywords]}"
 	end
-
 end
